@@ -347,13 +347,10 @@ EComResponse CModbusComLayer::openConnection(char *paLayerParameter){
       mConnectionState = e_Listening;
       break;
     case e_Client: {
-      STcpParams tcpParams;
-      SRtuParams rtuParams;
-      SCommonParams commonParams;
+      STcpParams tcpParams{};
+      SRtuParams rtuParams{};
+      SCommonParams commonParams{};
       char idString[256] = {0};
-      memset(&tcpParams, 0, sizeof(tcpParams));
-      memset(&rtuParams, 0, sizeof(rtuParams));
-      memset(&commonParams, 0, sizeof(commonParams));
 
       int errCode = processClientParams(paLayerParameter, &tcpParams, &rtuParams, &commonParams, idString);
       if(errCode != 0){

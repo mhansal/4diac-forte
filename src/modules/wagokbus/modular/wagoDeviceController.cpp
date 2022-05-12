@@ -29,10 +29,7 @@ const char * const WagoDeviceController::scmFailedGetTerminalList = "Call to ldk
 const char * const WagoDeviceController::scmFailedToGetDeviceList = "Failed to get device list";
 
 WagoDeviceController::WagoDeviceController(CDeviceExecution& paDeviceExecution) :
-    forte::core::io::IODeviceMultiController(paDeviceExecution), mAppDevInterface(0), mTaskId(0), mKBusDeviceId(scmInvalidDeviceId), mTerminalCount(0) {
-
-  memset(mTerminalIds, 0, sizeof(mTerminalIds));
-  memset(mTerminalInfos, 0, sizeof(mTerminalInfos));
+    forte::core::io::IODeviceMultiController(paDeviceExecution), mAppDevInterface(0), mTaskId(0), mKBusDeviceId(scmInvalidDeviceId), mTerminalCount(0), mTerminalIds{}, mTerminalInfos{} {
   mConfig.updateInterval = 25;
 }
 

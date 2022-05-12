@@ -25,11 +25,11 @@ using namespace forte::com_infra;
 CIPComLayer::CIPComLayer(CComLayer* paUpperLayer, CBaseCommFB* paComFB) :
         CComLayer(paUpperLayer, paComFB),
         mSocketID(CIPComSocketHandler::scmInvalidSocketDescriptor),
+        mDestAddr{},
         mListeningID(CIPComSocketHandler::scmInvalidSocketDescriptor),
         mInterruptResp(e_Nothing),
+        mRecvBuffer{},
         mBufFillSize(0){
-  memset(mRecvBuffer, 0, sizeof(mRecvBuffer)); //TODO change this to  mRecvBuffer{0} in the extended list when fully switching to C++11
-  memset(&mDestAddr, 0, sizeof(mDestAddr));
 }
 
 CIPComLayer::~CIPComLayer() = default;

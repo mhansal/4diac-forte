@@ -59,9 +59,7 @@ void PLCnextSlaveHandler::dropHandles() {
 void PLCnextSlaveHandler::initBufferImage(size_t size)
 {
     this->imageSize = size;
-    this->imageBuffer = new char[imageSize];
-
-    memset(this->imageBuffer, 0, size);
+    this->imageBuffer = new char[imageSize]{};
 }
 
 void PLCnextSlaveHandler::addHandle(PLCnextSlaveHandle* paHandle) {

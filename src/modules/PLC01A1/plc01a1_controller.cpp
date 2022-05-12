@@ -42,16 +42,8 @@ const uint32_t PLC01A1Controller::scmSPIOutputMaxSpeed = 5000000; //5 MHz
 
 
 PLC01A1Controller::PLC01A1Controller(CDeviceExecution &paDeviceExecution) :
-    forte::core::io::IODevicePollController(paDeviceExecution, 25), mSPIInputFd(0), mSPIOutputFd(0) {
-  memset(mInputArrayOld, 0, scmInputArrayLenght);
-  memset(mInputArray, 0, scmInputArrayLenght);
-  memset(mOutputArray, 0, scmOutputArrayLenght);
-  memset(mInputTX, 0, scmOutputArrayLenght);
-  memset(mOutputRX, 0, scmOutputArrayLenght);
-
-  memset(&mInputTR, 0, sizeof(struct spi_ioc_transfer));
-  memset(&mOutputTR, 0, sizeof(struct spi_ioc_transfer));
-
+    forte::core::io::IODevicePollController(paDeviceExecution, 25), mSPIInputFd(0), mSPIOutputFd(0),
+    mInputArrayOld{}, mInputArray{}, mOutputArray{}, mInputTX{}, mOutputRX{}, mInputTR{}, mOutputTR{} {
   mInputTR.tx_buf = (unsigned long) mInputTX;
   mInputTR.rx_buf = (unsigned long) mInputArray;
   mInputTR.len = 2;

@@ -349,8 +349,8 @@ bool EmbrickBusHandler::transfer(unsigned int paTarget, Command paCmd,
     return false;
   }
 
-  memset(mSendBuffer, 0, bufferLength);
-  memset(mRecvBuffer, 0, bufferLength);
+  std::fill(std::begin(mSendBuffer), std::end(mSendBuffer), 0);
+  std::fill(std::begin(mRecvBuffer), std::end(mRecvBuffer), 0);
 
   // Prepare header
   EmbrickHeaderPackage* header = (EmbrickHeaderPackage*) mSendBuffer;

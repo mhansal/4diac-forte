@@ -79,8 +79,7 @@ forte::com_infra::EComResponse CPosixSerCommLayer::openSerialConnection(const SS
 
   if(CFDSelectHandler::scmInvalidFileDescriptor != fileDescriptor){
     tcgetattr(fileDescriptor, &mOldTIO);
-    struct termios stNewTIO;
-    memset(&stNewTIO, 0, sizeof(stNewTIO));
+    struct termios stNewTIO{};
 
     stNewTIO.c_line = mOldTIO.c_line;
 

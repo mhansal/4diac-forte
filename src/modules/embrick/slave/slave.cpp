@@ -22,13 +22,9 @@ const int EmbrickSlaveHandler::scmMaxUpdateErrors = 50;
 EmbrickSlaveHandler::EmbrickSlaveHandler(EmbrickBusHandler* paBus, int paAddress, EmbrickSlaveInitPackage paInit) :
     mDelegate(0), mAddress(paAddress), mType((SlaveType) paInit.mDeviceId), mBus(paBus), mDataSendLength(paInit.mDataSendLength),
         mDataReceiveLength(paInit.mDataReceiveLength), mStatus(NotInitialized), mOldStatus(NotInitialized) {
-  mUpdateSendImage = new unsigned char[mDataSendLength];
-  mUpdateReceiveImage = new unsigned char[mDataReceiveLength];
-  mUpdateReceiveImageOld = new unsigned char[mDataReceiveLength];
-
-  memset(mUpdateSendImage, 0, mDataSendLength);
-  memset(mUpdateReceiveImage, 0, mDataReceiveLength);
-  memset(mUpdateReceiveImageOld, 0, mDataReceiveLength);
+  mUpdateSendImage = new unsigned char[mDataSendLength]{};
+  mUpdateReceiveImage = new unsigned char[mDataReceiveLength]{};
+  mUpdateReceiveImageOld = new unsigned char[mDataReceiveLength]{};
 
   mUpdateErrorCounter = 0;
 

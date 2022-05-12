@@ -21,9 +21,7 @@
 const int CTXThread::scmThreadListSize = 27;
 TCTXThreadPtr CTXThread::smThreadList[27] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-forte::arch::CThreadBase<TX_THREAD>::TThreadHandleType CTXThread::createThread(long paStackSize){
-  memset((void *) &mThreadData, 0, sizeof(mThreadData));
-
+forte::arch::CThreadBase<TX_THREAD>::TThreadHandleType CTXThread::createThread(long paStackSize) : mThreadData{} {
   if (TX_SUCCESS == tx_thread_create(&mThreadData, mThreadName, threadFunction, (ULONG)(this), mStack, paStackSize, scmThreadListSize + 3, scmThreadListSize + 3, //disable preemption threshhold
       TX_NO_TIME_SLICE, TX_AUTO_START)){
     return mThreadData.tx_thread_id;
@@ -35,9 +33,8 @@ void CTXThread::threadFunction(ULONG paData) {
   CThreadBase::runThread(static_cast<CTXThread *>(paData));
 }
 
-CTXThread::CTXThread(long paStackSize, char *paThreadName) : CThreadBase(paStackSize), mThreadName(paThreadName) {
+CTXThread::CTXThread(long paStackSize, char *paThreadName) : CThreadBase(paStackSize), mThreadName(paThreadName), mThreadData{} {
   mStack = new char[paStackSize];
-  memset((void *) &mThreadData, 0, sizeof(mThreadData));
 }
 
 CTXThread::~CTXThread() = default;

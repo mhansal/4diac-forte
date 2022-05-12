@@ -31,8 +31,7 @@ const SFBInterfaceSpec CAnyAdapter::scmFBInterfaceSpec = {
 
 CAnyAdapter::CAnyAdapter(CStringDictionary::TStringId paAdapterInstanceName, forte::core::CFBContainer &paContainer, bool paIsPlug) :
     CAdapter(paContainer, &scmFBInterfaceSpec, paAdapterInstanceName, &scmFBInterfaceSpec, paIsPlug), m_ParentFB(nullptr),
-    mParentAdapterlistID(0){
-  memset(&mCurrentFBInterfaceSpec, 0, sizeof(SFBInterfaceSpec));
+    mParentAdapterlistID(0), mCurrentFBInterfaceSpec{} {
 }
 
 CAnyAdapter::~CAnyAdapter() = default;

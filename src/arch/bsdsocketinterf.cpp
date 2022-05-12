@@ -36,15 +36,15 @@ CBSDSocketInterface::TSocketDescriptor CBSDSocketInterface::openTCPServerConnect
 #endif
 
   if(TSocketDescriptor nSocket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);-1 != nSocket) {
-    struct sockaddr_in stSockAddr;
-    memset(&(stSockAddr), '\0', sizeof(sockaddr_in));
-    stSockAddr.sin_family = AF_INET;
+    struct sockaddr_in stSockAddr = {
+            .sin_family = AF_INET,
 #if VXWORKS
-    stSockAddr.sin_port = static_cast<unsigned short>(htons(paPort));
+            .sin_port = static_cast<unsigned short>(htons(paPort)),
 #else
-    stSockAddr.sin_port = htons(paPort);
+            .sin_port = htons(paPort),
 #endif
-    stSockAddr.sin_addr.s_addr = htonl(INADDR_ANY );
+            .sin_addr = { .s_addr = htonl(INADDR_ANY ) }
+    };
 
     if (int nOptVal = 1;setsockopt(nSocket, SOL_SOCKET, SO_REUSEADDR, (char *)&nOptVal, sizeof(nOptVal)) == -1) {
       DEVLOG_ERROR("CBSDSocketInterface: could not set socket option SO_REUSEADDR:  %s\n", strerror(errno));
@@ -78,17 +78,15 @@ CBSDSocketInterface::TSocketDescriptor CBSDSocketInterface::openTCPClientConnect
   DEVLOG_INFO("CBSDSocketInterface: Opening TCP-Client connection at: %s:%d\n", paIPAddr, paPort);
 
   if(TSocketDescriptor nSocket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);-1 != nSocket) {
-    struct sockaddr_in stSockAddr;
-    stSockAddr.sin_family = AF_INET;
+    struct sockaddr_in stSockAddr = {
+            .sin_family = AF_INET,
 #if VXWORKS
-    stSockAddr.sin_port = static_cast<unsigned short>(htons(paPort));
+            .sin_port = static_cast<unsigned short>(htons(paPort)),
 #else
-    stSockAddr.sin_port = htons(paPort);
+            .sin_port = htons(paPort),
 #endif
-    stSockAddr.sin_addr.s_addr = inet_addr(paIPAddr);
-#ifndef __ZEPHYR__
-    memset(&(stSockAddr.sin_zero), '\0', sizeof(stSockAddr.sin_zero));
-#endif
+            .sin_addr = { .s_addr = inet_addr(paIPAddr) }
+    };
 
     if(-1 == connect(nSocket, (struct sockaddr *) &stSockAddr, sizeof(struct sockaddr))){
       close(nSocket);
@@ -158,16 +156,17 @@ CBSDSocketInterface::TSocketDescriptor CBSDSocketInterface::openUDPSendPort(char
   nRetVal = socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
   if(-1 != nRetVal){
-    mDestAddr->sin_family = AF_INET;
+    *mDestAddr = {
+            .sin_family = AF_INET,
 #if VXWORKS
-    mDestAddr->sin_port = static_cast<unsigned short>(htons(paPort));
+            .sin_port = static_cast<unsigned short>(htons(paPort)),
 #else
-    mDestAddr->sin_port = htons(paPort);
+            .sin_port = htons(paPort),
 #endif
-    mDestAddr->sin_addr.s_addr = inet_addr(paIPAddr);
-#ifndef __ZEPHYR__
-    memset(&(mDestAddr->sin_zero), '\0', sizeof(mDestAddr->sin_zero));
+            .sin_addr = { .s_addr = inet_addr(paIPAddr) }
+    };
 
+#ifndef __ZEPHYR__
     if (paMCInterface) {
       struct in_addr ifaddr;
       ifaddr.s_addr = inet_addr(paMCInterface);
@@ -222,17 +221,15 @@ CBSDSocketInterface::TSocketDescriptor CBSDSocketInterface::openUDPReceivePort(c
         }
 #endif
 
-      struct sockaddr_in stSockAddr;
-      stSockAddr.sin_family = AF_INET;
+      struct sockaddr_in stSockAddr {
+          .sin_family = AF_INET,
 #if VXWORKS
-      stSockAddr.sin_port = static_cast<unsigned short>(htons(paPort));
+          .sin_port = static_cast<unsigned short>(htons(paPort)),
 #else
-      stSockAddr.sin_port = htons(paPort);
+          .sin_port = htons(paPort),
 #endif
-      stSockAddr.sin_addr.s_addr = htonl(INADDR_ANY);
-#ifndef __ZEPHYR__
-      memset(&(stSockAddr.sin_zero), '\0', sizeof(stSockAddr.sin_zero));
-#endif
+          .sin_addr = {.s_addr = htonl(INADDR_ANY) }
+      };
       if(0 == bind(nSocket, (struct sockaddr *) &stSockAddr, sizeof(struct sockaddr))){
 #ifndef __ZEPHYR__
         // setting up multicast group
