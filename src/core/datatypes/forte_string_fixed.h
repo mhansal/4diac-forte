@@ -71,13 +71,23 @@ class CIEC_STRING_FIXED final : public CIEC_STRING {
       return *this;
     }
 
-    CIEC_STRING_FIXED &operator=(const CIEC_STRING_FIXED &paValue) {
-      getStorageMutable() = paValue.getStorage();
+    template<size_t maxLengthSrc>
+    CIEC_STRING_FIXED &operator=(const CIEC_STRING_FIXED<maxLengthSrc> &paValue) {
+      if constexpr (maxLengthSrc > maxLength) {
+        const std::string_view stringView(paValue.getStorage());
+        getStorageMutable() = stringView.substr(0, maxLength);
+      } else {
+        getStorageMutable() = paValue.getStorage();
+      }
       return *this;
     }
 
-    CIEC_STRING_FIXED &operator=(CIEC_STRING_FIXED &&paValue) {
+    template<size_t maxLengthSrc>
+    CIEC_STRING_FIXED &operator=(CIEC_STRING_FIXED<maxLengthSrc> &&paValue) {
       getStorageMutable() = std::move(paValue.getStorageMutable());
+      if constexpr (maxLengthSrc > maxLength) {
+        getStorageMutable().resize(std::min<std::size_t>(this->length(), maxLength));
+      }
       return *this;
     }
 
