@@ -37,7 +37,6 @@
 
 // other includes
 
-#include <cstring>    // needed for memset
 #include "spidevice.h"
 
 namespace CONMELEON {
@@ -171,10 +170,7 @@ bool CSpiDevice::transfer(const unsigned char* paTxData, unsigned char* paRxData
      * it is defined in linux/spi/spidev.h
      * paTxData is the buffer to hold the data sent and paRxData the data received
      */
-    struct spi_ioc_transfer spiMsg;
-
-    // initialize spi_ioc_transfer structure first, see description in linux/spi/spidev.h
-    std::memset(&spiMsg,0,sizeof(spiMsg));
+    struct spi_ioc_transfer spiMsg{};
 
     spiMsg.tx_buf = (unsigned long)(paTxData);         // transmit a byte from paTxData buffer, static_cast<unsigned long> does not work here
     spiMsg.rx_buf = (unsigned long)(paRxData);         // receive response from device in the paRxData buffer

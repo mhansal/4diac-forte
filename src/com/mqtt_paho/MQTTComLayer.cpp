@@ -22,8 +22,7 @@
 using namespace forte::com_infra;
 
 MQTTComLayer::MQTTComLayer(CComLayer* paUpperLayer, CBaseCommFB* pFB) : CComLayer(paUpperLayer, pFB),
-mUsedBuffer(0), mInterruptResp(e_Nothing) {
-  memset(mDataBuffer, 0, mBufferSize); //TODO change this to  dataBuffer{0} in the extended list when fully switching to C++11
+    mUsedBuffer(0), mInterruptResp(e_Nothing), mBufferSize{} {
 }
 
 MQTTComLayer::~MQTTComLayer() = default;

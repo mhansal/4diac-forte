@@ -28,10 +28,8 @@ DEFINE_FIRMWARE_DATATYPE(DATE, g_nStringIdDATE)
 
 int CIEC_DATE::fromString(const char *paValue){
   // 2007-12-21
-  struct tm tm;
+  struct tm tm{};
   char *acBuffer = const_cast<char*>(paValue);
-
-  memset(&tm, 0, sizeof(tm));
 
   if('d' == tolower(*acBuffer)){
     acBuffer++;

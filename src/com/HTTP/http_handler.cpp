@@ -42,7 +42,7 @@ DEFINE_HANDLER(CHTTP_Handler);
 
 CHTTP_Handler::CHTTP_Handler(CDeviceExecution &paDeviceExecution) :
     CExternalEventHandler(paDeviceExecution) {
-  memset(sRecvBuffer, 0, cgIPLayerRecvBufferSize);
+  std::fill(std::begin(sRecvBuffer), std::end(sRecvBuffer), 0);
 }
 
 CHTTP_Handler::~CHTTP_Handler() {

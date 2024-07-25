@@ -17,9 +17,7 @@
 template <typename TThreadHandle, TThreadHandle nullHandle>
 CSerialComLayerBase<TThreadHandle, nullHandle>::CSerialComLayerBase(forte::com_infra::CComLayer* paUpperLayer,
     forte::com_infra::CBaseCommFB * paFB) :
-    forte::com_infra::CComLayer(paUpperLayer, paFB), mInterruptResp(forte::com_infra::e_Nothing), mBufFillSize(0), mSerialHandle(nullHandle) {
-  memset(mRecvBuffer, 0, sizeof(mRecvBuffer)); //TODO change this to  mRecvBuffer{0} in the extended list when fully switching to C++11
-  memset(mTerminationSymbol, 0, sizeof(mTerminationSymbol)); //TODO change this to  mTerminationSymbol{0} in the extended list when fully switching to C++11
+    forte::com_infra::CComLayer(paUpperLayer, paFB), mInterruptResp(forte::com_infra::e_Nothing), mBufFillSize(0), mSerialHandle(nullHandle), mRecvBuffer{}, mTerminationSymbol{} {
 }
 
 template <typename TThreadHandle, TThreadHandle nullHandle>

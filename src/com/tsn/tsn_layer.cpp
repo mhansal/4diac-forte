@@ -101,8 +101,7 @@ EComResponse CTSNLayer::setVLANIDForSocket(const char* paId){
 
   unsigned int id = static_cast<unsigned int>(forte::core::util::strtoul(paId, nullptr, 10));
   if(scmMinVLANID <= id && scmMaxVLANID >= id){
-    struct ifreq ifr;
-    memset(&ifr, 0, sizeof(ifr));
+    struct ifreq ifr{};
 
     snprintf(ifr.ifr_name, sizeof(ifr.ifr_name), "eth0.%u", id);
 

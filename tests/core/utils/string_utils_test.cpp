@@ -453,7 +453,7 @@ BOOST_AUTO_TEST_SUITE(CIEC_ARRAY_function_test)
     BOOST_AUTO_TEST_CASE(transformNonEscapedToEscapedXMLText){
       char toTest[50];
       for(size_t i = 0; i < sizeof(sNonEscapedData) / sizeof(const char*); i++){
-        memset(toTest, 0, 50);
+        std::fill(std::begin(toTest), std::end(toTest), 0);
         memcpy(toTest, sNonEscapedData[i], strlen(sNonEscapedData[i]));
         BOOST_CHECK_EQUAL(forte::core::util::transformNonEscapedToEscapedXMLText(toTest), sExtraSize[i]);
         BOOST_CHECK_EQUAL(0, strcmp(toTest, sEscapedData[i]));
@@ -463,7 +463,7 @@ BOOST_AUTO_TEST_SUITE(CIEC_ARRAY_function_test)
     BOOST_AUTO_TEST_CASE(transformEscapedXMLToNonEscapedText){
       char toTest[50];
       for(size_t i = 0; i < sizeof(sNonEscapedData) / sizeof(const char*); i++){
-        memset(toTest, 0, 50);
+        std::fill(std::begin(toTest), std::end(toTest), 0);
         memcpy(toTest, sEscapedData[i], strlen(sEscapedData[i]));
         BOOST_CHECK_EQUAL(forte::core::util::transformEscapedXMLToNonEscapedText(toTest), sExtraSize[i]);
         BOOST_CHECK_EQUAL(0, strcmp(toTest, sNonEscapedData[i]));

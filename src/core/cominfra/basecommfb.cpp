@@ -23,7 +23,6 @@
 #include "../../arch/fortenew.h"
 #include <string.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <devlog.h>
 #include "core/utils/string_utils.h"
 
@@ -32,8 +31,7 @@ using namespace forte::com_infra;
 const char * const CBaseCommFB::scmResponseTexts[] = { "OK", "INVALID_ID", "TERMINATED", "INVALID_OBJECT", "DATA_TYPE_ERROR", "INHIBITED", "NO_SOCKET", "SEND_FAILED", "RECV_FAILED" };
 
 CBaseCommFB::CBaseCommFB(const CStringDictionary::TStringId paInstanceNameId, forte::core::CFBContainer &paContainer, forte::com_infra::EComServiceType paCommServiceType) :
-    CGenFunctionBlock<CEventSourceFB>(paContainer, paInstanceNameId), mCommServiceType(paCommServiceType), mTopOfComStack(nullptr) {
-  memset(mInterruptQueue, 0, sizeof(mInterruptQueue)); //TODO change this to  mInterruptQueue{0} in the extended list when fully switching to C++11
+    CGenFunctionBlock<CEventSourceFB>(paContainer, paInstanceNameId), mCommServiceType(paCommServiceType), mTopOfComStack(nullptr), mInterruptQueue{} {
   setEventChainExecutor(getResource()->getResourceEventExecution());
   mComInterruptQueueCount = 0;
 }

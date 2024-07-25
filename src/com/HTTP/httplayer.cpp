@@ -28,8 +28,7 @@ using namespace forte::com_infra;
 using namespace std::string_literals;
 
 CHttpComLayer::CHttpComLayer(CComLayer* paUpperLayer, CBaseCommFB* paComFB) :
-    CComLayer(paUpperLayer, paComFB), mInterruptResp(e_Nothing), mRequestType(e_NOTSET), mPort(80), mBufFillSize(0), mCorrectlyInitialized(false) {
-  memset(mRecvBuffer, 0, sizeof(mRecvBuffer));
+    CComLayer(paUpperLayer, paComFB), mInterruptResp(e_Nothing), mRequestType(e_NOTSET), mPort(80), mBufFillSize(0), mCorrectlyInitialized(false), mRecvBuffer{} {
 }
 
 CHttpComLayer::~CHttpComLayer() {

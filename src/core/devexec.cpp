@@ -19,9 +19,8 @@
 #include "device.h"
 
 CDeviceExecution::CDeviceExecution(CDevice& paDevice) :
-  mDevice(paDevice) {
-  memset(mRegisteredEventHandlers, 0, sizeof(SEventHandlerElement) * cgNumberOfHandlers);
-
+  mDevice(paDevice),
+  mRegisteredEventHandlers{} {
   CDeviceExecution::createHandlers(*this);
 
   getTimer().enableHandler();

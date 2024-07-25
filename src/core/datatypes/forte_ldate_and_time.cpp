@@ -51,10 +51,8 @@ int CIEC_LDATE_AND_TIME::fromString(const char *paValue){
     acBuffer++;
   }
 
-  struct tm tm;
+  struct tm tm{};
   unsigned int msec = 0;
-
-  memset(&tm, 0, sizeof(tm));
 
   //Duplicate code the same as in forte date
   if('\0' != *acBuffer){

@@ -27,11 +27,9 @@ DEFINE_FIRMWARE_DATATYPE(TIME_OF_DAY, g_nStringIdTIME_OF_DAY)
 
 int CIEC_TIME_OF_DAY::fromString(const char *paValue){
   // 15:00:00.000
-  struct tm tm;
+  struct tm tm{};
   int msec = 0;
   char *acBuffer = const_cast<char*>(paValue);
-
-  memset(&tm, 0, sizeof(tm));
 
   if('t' == tolower(*acBuffer) ){
     if(('o' == tolower(acBuffer[1])) && ('d' == tolower(acBuffer[2]))){
